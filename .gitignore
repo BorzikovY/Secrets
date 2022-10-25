@@ -1,0 +1,6 @@
+.idea
+*initial.py
+env/*
+db.sqlite3
+config/__pycache__/*
+config/settings_local.py
