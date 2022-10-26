@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'one_time_secrets'
+    # 'django_rest_framework',
+    'one_time_secrets',
 ]
 
 MIDDLEWARE = [
