@@ -4,3 +4,5 @@ env/*
 db.sqlite3
 config/__pycache__/*
 config/settings_local.py
+one_time_secrets/__pycache__/*
+one_time_secrets/migrations*
