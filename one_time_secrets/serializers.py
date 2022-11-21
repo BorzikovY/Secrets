@@ -11,11 +11,3 @@ class SecretCreateSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return Secret.objects.create(**validated_data)
-
-
-class SecretGiveSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Secret
-        fields = ('text', 'secret_word')
-        read_only_fields = ['text']

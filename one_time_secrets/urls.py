@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import SecretCreateView, SecretGiveView
+from . import views
 
 
 urlpatterns = [
-    path('generate/', SecretCreateView.as_view()),
-    path('secrets/<uuid:access_uid>', SecretGiveView.as_view()),
+    path('generate/', views.SecretCreateView.as_view()),
+    path('secrets/<uuid:access_uid>/', views.give_secret_view),
 ]

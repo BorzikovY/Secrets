@@ -1,10 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
 from .models import Secret
-from .serializers import SecretCreateSerializer, SecretGiveSerializer
+from .serializers import SecretCreateSerializer
 from rest_framework import status
 from .renderers import BaseJSONRenderer
+from django.shortcuts import get_object_or_404
 
 
 class SecretCreateView(APIView):
@@ -13,7 +15,6 @@ class SecretCreateView(APIView):
     renderer_classes = (BaseJSONRenderer,)
 
     def post(self, request):
-        print(request.data)
         time_of_death = int(request.data['time_of_death'])
 
         if time_of_death < 1 or time_of_death > 60:
@@ -25,8 +26,11 @@ class SecretCreateView(APIView):
 
         return Response({'access_uid': serializer.data['access_uid']}, status=status.HTTP_201_CREATED)
 
-
-class SecretGiveView(generics.CreateAPIView):
-    model = Secret
-    serializers = SecretGiveSerializer
-
+@csrf_exempt
+@api_view(['POST'])
+def give_secret_view(request, access_uid):
+    secret = get_object_or_404(Secret, access_uid=access_uid)
+    if request.data['secret_word'] == secret.secret_word:
+        Secret.objects.filter(id=secret.id).delete()
+        return Response({'text': secret.text}, status=status.HTTP_202_ACCEPTED)
+    return Response({'message': 'incorrect secret word'}, status=status.HTTP_403_FORBIDDEN)
