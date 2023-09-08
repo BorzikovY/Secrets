@@ -10,11 +10,11 @@ from django.shortcuts import get_object_or_404
 
 
 class SecretCreateView(APIView):
-
+    '''Secret create View'''
     serializer_class = SecretCreateSerializer
     renderer_classes = (BaseJSONRenderer,)
 
-    def post(self, request):
+    def post(self, request) -> Response:
         time_of_death = int(request.data['time_of_death'])
 
         if time_of_death < 1 or time_of_death > 60:
@@ -28,7 +28,7 @@ class SecretCreateView(APIView):
 
 @csrf_exempt
 @api_view(['POST'])
-def give_secret_view(request, access_uid):
+def give_secret_view(request, access_uid) -> Response:
     secret = get_object_or_404(Secret, access_uid=access_uid)
     if request.data['secret_word'] == secret.secret_word:
         Secret.objects.filter(id=secret.id).delete()

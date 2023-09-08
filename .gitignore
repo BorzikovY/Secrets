@@ -1,9 +1,9 @@
 .idea
 *initial.py
-env/*
-venv/*
+env
+venv
 db.sqlite3
-config/__pycache__/*
+config/__pycache__
 config/settings_local.py
-one_time_secrets/__pycache__/*
-one_time_secrets/migrations*
+one_time_secrets/__pycache__
+one_time_secrets/migrations
